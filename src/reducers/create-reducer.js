@@ -1,4 +1,8 @@
-export default config => {
+export default (config = {}) => {
+  if (config.initial === undefined) {
+    throw new Error('initial state must be defined')
+  }
+
   return (state = config.initial, action) => {
     const handler = config[action.type];
 

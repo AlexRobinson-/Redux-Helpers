@@ -1,0 +1,29 @@
+{
+  "name": "alexs-redux-helpers",
+  "version": "1.0.7",
+  "main": "lib/redux-helpers.js",
+  "jsnext:main": "lib/index.js",
+  "module": "lib/index.js",
+  "modules.root": "lib",
+  "repository": {},
+  "license": "MIT",
+  "scripts": {
+    "build:main": "webpack",
+    "build:module": "babel src --out-dir lib",
+    "build": "npm run build:main && npm run build:module",
+    "copypackage": "cp -rf package.json lib",
+    "dist": "npm run build && npm run copypackage && cd lib && npm publish"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "webpack": "^2.4.1",
+    "babel-preset-es2015": "^6.24.1"
+  },
+  "peerDependencies": {
+    "redux": "^3.6.0"
+  },
+  "dependencies": {}
+}

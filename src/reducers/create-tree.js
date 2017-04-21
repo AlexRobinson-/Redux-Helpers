@@ -1,13 +1,33 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
+import isObject from './../utils/is-object';
 import createReducer from './create-reducer';
 
-const createTree = reducers => combineReducers(
-  Object.keys(reducers).reduce(
-    (all, reducer) => ({
-      ...all,
-      [reducer]: typeof reducers[reducer] === 'function' ? reducers[reducer] : createReducer(reducers[reducer])
-    }), {}
-  )
-);
+const getReducer = reducer => {
+  if (typeof reducer === 'function') {
+    return reducer;
+  }
+
+  if (isObject(reducer)) {
+    return createReducer(reducer)
+  }
+
+  throw new Error('reducer must be a function or object')
+
+}
+
+const createTree = reducers => {
+  if (!isObject(reducers)) {
+    throw new Error('reducers must be an object');
+  }
+
+  return combineReducers(
+    Object.keys(reducers).reduce(
+      (all, reducer) => ({
+        ...all,
+        [reducer]: getReducer(reducers[reducer])
+      }), {}
+    )
+  );
+}
 
 export default createTree;

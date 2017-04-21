@@ -1,4 +1,4 @@
-const isObject = obj => obj !== null && typeof obj === 'object'
+import isObject from './../utils/is-object';
 
 export default (type, payload = {}, meta = {}) => {
   if (typeof type !== 'string') {

@@ -179,6 +179,8 @@ Each action handler should return an array in the format [getId(s), getNewState]
 - getId(s) [func] return either a single id, or an array of ids
 - getNewState [any|func(state[id], action)] If a function, will be called with the id's sub-state, otherwise will set the substate to the value of getNewState
 
+You can use `initial` and `default` just like in the createReducer function. However here `initial` is optional and is used as the initial state for each item in the object, rather than the reducers state.
+
 ```js
 const todos = createDynamicReducer({
   ADD_TODO: [

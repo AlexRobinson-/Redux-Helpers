@@ -5,7 +5,9 @@
   "jsnext:main": "lib/index.js",
   "module": "lib/index.js",
   "modules.root": "lib",
-  "repository": {},
+  "repository": {
+    "url": "https://github.com/AlexRobinson-/Redux-Helpers"
+  },
   "license": "MIT",
   "scripts": {
     "build:main": "webpack",

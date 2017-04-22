@@ -1,4 +1,4 @@
-[![npm](https://img.shields.io/npm/v/alexs-redux-helpers.svg)]()
+[![npm](https://img.shields.io/npm/v/alexs-redux-helpers.svg)](https://www.npmjs.com/package/alexs-redux-helpers)
 
 # Alex's Redux Helpers
 

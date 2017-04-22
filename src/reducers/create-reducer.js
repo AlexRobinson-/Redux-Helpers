@@ -1,4 +1,10 @@
+import isObject from './../utils/is-object';
+
 export default (config = {}) => {
+  if (!isObject(config)) {
+    throw new Error('createReducer requires config to be an object')
+  }
+
   if (config.initial === undefined) {
     throw new Error('initial state must be defined')
   }

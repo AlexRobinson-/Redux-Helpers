@@ -15,7 +15,7 @@ const getReducer = reducer => {
 
 }
 
-const createTree = reducers => {
+const createMultiReducer = reducers => {
   if (!isObject(reducers)) {
     throw new Error('reducers must be an object');
   }
@@ -30,4 +30,4 @@ const createTree = reducers => {
   );
 }
 
-export default createTree;
+export default createMultiReducer;

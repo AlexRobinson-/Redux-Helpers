@@ -1,11 +1,11 @@
 import redux from 'redux';
 import createReducer from './create-reducer';
-import createTree from './create-tree';
+import createTree from './create-multi-reducer';
 
 jest.mock('redux', () => ({ combineReducers: jest.fn() }));
 jest.mock('./create-reducer', () => jest.fn().mockReturnValue('created-reducer'));
 
-describe('create-tree', () => {
+describe('create-multi-reducer', () => {
   describe('when reducers not an object', () => {
     it('throws an error', () => {
       expect(() => createTree('not an object')).toThrow();
@@ -43,7 +43,7 @@ describe('create-tree', () => {
       expect(redux.combineReducers).toHaveBeenCalledWith(expectedConfig)
     })
 
-    it('uses create-reducer to create reducers defined as objects', () => {
+    it('uses create-reducer to create reducers that were defined as objects', () => {
       expect(createReducer).toHaveBeenCalledWith(dogReducer)
     })
   })

@@ -1,20 +1,9 @@
 import createReducer from './create-reducer';
 
 describe('create-reducer', () => {
-  describe('when initial is defined', () => {
-    let reducer
-
-    beforeEach(() => {
-      reducer = createReducer({
-        initial: 'initial'
-      })
-    })
-
-    it('returns a function', () => {
-      expect(typeof reducer).toEqual('function')
-    })
+  it('throws when given a non-object', () => {
+    expect(() => createReducer('cat')).toThrow()
   })
-
   describe('when initial is not defined', () => {
     it('returns config.initial as initial state', () => {
       expect(() => createReducer({})).toThrow()
@@ -32,6 +21,10 @@ describe('create-reducer', () => {
         'CAT_ACTION': 'cat',
         'DOG_ACTION': mockDogActionHandler
       })
+    })
+
+    it('is a function', () => {
+      expect(typeof reducer).toEqual('function')
     })
 
     it('returns config.initial as initial state', () => {

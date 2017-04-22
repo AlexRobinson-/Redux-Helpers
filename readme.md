@@ -169,7 +169,74 @@ const auth = combineReducers({
   isLoggingIn
 })
 ```
+## createDynamicReducer
+There have been a few instances where I have created a reducer, whos state is an object. Each action that it handled simply updated keys/ids of the object.
 
+I created the createDynamicReducer to make this process a little bit simpler.
+
+Each action handler should return an array in the format [getId(s), getNewState]
+
+- getId(s) [func] return either a single id, or an array of ids
+- getNewState [any|func(state[id], action)] If a function, will be called with the id's sub-state, otherwise will set the substate to the value of getNewState
+
+```js
+const todos = createDynamicReducer({
+  ADD_TODO: [
+    action => action.payload.todo.id,
+    (state, action) => action.payload.todo
+  ],
+  UPDATE_TODO: [
+    action => action.payload.todo.id,
+    (state, action) => ({ ...state, ...action.payload.todo })
+  ],
+  MARK_TODOS_AS_COMPLETED: [
+    action => action.payload.todoIds,
+    state => ({...state, completed: true})
+  ],
+  REMOVE_TODOS: [
+    action => action.payload.todoIds,
+    null
+  ]
+})
+```
+
+vs
+
+```js
+const todos = (state = {}, action) => {
+  switch(action.type) {
+    case ADD_TODO:
+      return {
+        ...state,
+        [action.payload.todo.id]: action.payload.todo
+      }
+    case UPDATE_TODO:
+      return {
+        ...state,
+        [action.payload.todo.id]: {
+          ...state[action.payload.todo.id],
+          ...action.payload.todo
+        }
+      }
+    case MARK_TODOS_AS_COMPLETED:
+      return action.payload.todoIds.reduce(
+        (newState, id) => ({
+          ...newState,
+          [id]: { ...newState[id], completed: true }
+        }), state
+      )
+    case REMOVE_TODOS:
+      return action.payload.todoIds.reduce(
+        (newState, id) => ({
+          ...newState,
+          [id]: null
+        }), state
+      )
+    default:
+      return state
+  }
+}
+```
 
 
 ## Selectors

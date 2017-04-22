@@ -1,6 +1,6 @@
 {
   "name": "alexs-redux-helpers",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "main": "lib/redux-helpers.js",
   "jsnext:main": "lib/index.js",
   "module": "lib/index.js",

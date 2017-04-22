@@ -1,3 +1,5 @@
+[![npm](https://img.shields.io/npm/v/alexs-redux-helpers.svg)]()
+
 # Alex's Redux Helpers
 
 ## Actions

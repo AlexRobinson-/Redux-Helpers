@@ -4,10 +4,9 @@ describe('create-reducer', () => {
   it('throws when given a non-object', () => {
     expect(() => createReducer('cat')).toThrow()
   })
-  describe('when initial is not defined', () => {
-    it('returns config.initial as initial state', () => {
-      expect(() => createReducer({})).toThrow()
-    })
+
+  it('throws an error when config.initial is not defined', () => {
+    expect(() => createReducer({})).toThrow()
   })
 
   describe('reducer', () => {

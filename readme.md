@@ -63,6 +63,113 @@ const count = (state = 0, action) => {
 }
 ```
 
+## createMultiReducer
+This works similar to `combineReducers` in redux, but instead allows you to either define your reducers as objects to be created with `createReducer` or as a regular reducer function.
+
+Example
+
+```js
+const auth = createMultiReducer({
+  userId: {
+    initial: null,
+    LOGIN_SUCCESS: (_, action) => action.payload.userId,
+    LOGOUT: null
+  },
+  isLoggedIn: {
+    initial: false,
+    LOGIN_SUCCESS: true,
+    LOGOUT: false
+  },
+  isLoggingIn: (state = false, action) => {
+    // I used a function here just for demonstration
+    // Using the createReducer object would be cleaner in my opinion here
+    switch(action.type) {
+      case 'LOGIN_REQUEST':
+        return true
+      case LOGIN_SUCCESS:
+      case LOGIN_FAILURE:
+        return false
+      default:
+        return state
+    }
+  }
+})
+```
+
+vs
+
+```js
+const initialState = {userId: null, isLoggedIn: false, isLoggedIn: false};
+const auth = (state = initialState, action) => {
+  switch(action.type) {
+    case LOGIN_SUCCESS:
+      return {
+        userId: action.payload.userId,
+        isLoggedIn: true,
+        isLoggingIn: false
+      }
+    case LOGOUT:
+      return {
+        ...state,
+        userId: null,
+        isLoggedIn: false
+      }
+    case LOGIN_REQUEST:
+    case LOGIN_FAILURE:
+      return {
+        ...state,
+        isLoggingIn: false
+      }
+    default:
+      return state
+  }
+}
+```
+
+or
+
+```js
+const userId = (state = null, action) => {
+  switch(action.type) {
+    case LOGIN_SUCCESS:
+      return action.payload.userId
+    case LOGOUT:
+      return null
+  default:
+    return state
+  }
+}
+
+const isLoggedIn = (state = false, action) => {
+  switch(action.type) {
+    case LOGIN_SUCCESS:
+      return true
+    case LOGOUT:
+      return false
+  default:
+    return state
+  }
+}
+
+const isLoggingIn = (state = false, action) => {
+  switch(action.type) {
+    case LOGIN_REQUEST:
+      return true
+    case LOGIN_SUCCESS:
+    case LOGIN_FAILURE:
+      return false
+  default:
+    return state
+  }
+}
+
+const auth = combineReducers({
+  userId,
+  isLoggedIn,
+  isLoggingIn
+})
+```
+
 
 
 ## Selectors

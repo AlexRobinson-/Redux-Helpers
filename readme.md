@@ -281,3 +281,45 @@ const logs = createMetaReducer('log', (state = {errors = [], info = []}, action)
 ```
 
 ## Selectors
+
+### nestSelectors(selectors = {})
+A pattern with selectors I like to follow is to create selectors that are only aware of their current 'level' in the state tree.
+What this means when you have a nested state tree, you may need to also nest your selectors to pass down the correct part of the state. 
+
+```js
+// /todos/by-id.js
+// ... reducer code
+
+const getById = (state, id) => state[id];
+
+export const selectors = {
+  getById
+}
+
+// /todos/index.js
+import byId, {selectors as byIdSelectors} from './by-id'
+// import other todo sub-reducers
+
+export default combineReducers({
+  // other todo reducers...
+  byId
+})
+
+const nestedById = nestSelectors(byIdSelectors, state => state.byId)
+
+export const selectors = {
+  ...otherNestedSelectors,
+  ...nestedById,
+}
+
+// /index.js
+import todos, {selectors as rawTodoSelectors} from './todos';
+// import other reducers
+
+export default combineReducers({
+  // other sub reducers
+  todos
+})
+
+export todoSelectors = nestSelectors(rawTodoSelectors, state => state.todos)
+```

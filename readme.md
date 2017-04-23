@@ -287,37 +287,17 @@ A pattern with selectors I like to follow is to create selectors that are only a
 What this means when you have a nested state tree, you may need to also nest your selectors to pass down the correct part of the state. 
 
 ```js
-// /todos/by-id.js
-// ... reducer code
-
-const getById = (state, id) => state[id];
-
-export const selectors = {
-  getById
-}
-
 // /todos/index.js
-import byId, {selectors as byIdSelectors} from './by-id'
-// import other todo sub-reducers
-
-export default combineReducers({
-  // other todo reducers...
-  byId
-})
-
-const nestedById = nestSelectors(byIdSelectors, state => state.byId)
+export default reducer
 
 export const selectors = {
-  ...otherNestedSelectors,
-  ...nestedById,
+  getTodo: (state, id) => state[id]
 }
 
 // /index.js
 import todos, {selectors as rawTodoSelectors} from './todos';
-// import other reducers
 
 export default combineReducers({
-  // other sub reducers
   todos
 })
 

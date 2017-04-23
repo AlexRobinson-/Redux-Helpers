@@ -301,5 +301,5 @@ export default combineReducers({
   todos
 })
 
-export todoSelectors = nestSelectors(rawTodoSelectors, state => state.todos)
+export const todoSelectors = nestSelectors(rawTodoSelectors, state => state.todos)
 ```

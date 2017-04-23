@@ -42,8 +42,8 @@ The config is fairly minimal
 ```js
 const count = createReducer({
   initial: 0, // required
-  INCREMENT: (state, action) => state + action.payload.amount,
-  RESET: 0,
+  [INCREMENT]: (state, action) => state + action.payload.amount,
+  [RESET]: 0,
   default: (state, action) => {
     console.log('Not an INCREMENT or RESET action', action);
     return state
@@ -56,7 +56,7 @@ const count = (state = 0, action) => {
   switch(action.type) {
     case INCREMENT:
       return state + action.payload.amount;
-    case INCREMENT:
+    case RESET:
       return 0
     default: 
       console.log('Not an INCREMENT or RESET action', action);
@@ -74,19 +74,19 @@ Example
 const auth = createMultiReducer({
   userId: {
     initial: null,
-    LOGIN_SUCCESS: (_, action) => action.payload.userId,
-    LOGOUT: null
+    [LOGIN_SUCCESS]: (_, action) => action.payload.userId,
+    [LOGOUT]: null
   },
   isLoggedIn: {
     initial: false,
-    LOGIN_SUCCESS: true,
-    LOGOUT: false
+    [LOGIN_SUCCESS]: true,
+    [LOGOUT]: false
   },
   isLoggingIn: (state = false, action) => {
     // I used a function here just for demonstration
     // Using the createReducer object would be cleaner in my opinion here
     switch(action.type) {
-      case 'LOGIN_REQUEST':
+      case LOGIN_REQUEST:
         return true
       case LOGIN_SUCCESS:
       case LOGIN_FAILURE:
@@ -185,19 +185,19 @@ You can use `initial` and `default` just like in the createReducer function. How
 
 ```js
 const todos = createDynamicReducer({
-  ADD_TODO: [
+  [ADD_TODO]: [
     action => action.payload.todo.id,
     (state, action) => action.payload.todo
   ],
-  UPDATE_TODO: [
+  [UPDATE_TODO]: [
     action => action.payload.todo.id,
     (state, action) => ({ ...state, ...action.payload.todo })
   ],
-  MARK_TODOS_AS_COMPLETED: [
+  [MARK_TODOS_AS_COMPLETED]: [
     action => action.payload.todoIds,
     state => ({...state, completed: true})
   ],
-  REMOVE_TODOS: [
+  [REMOVE_TODOS]: [
     action => action.payload.todoIds,
     null
   ]

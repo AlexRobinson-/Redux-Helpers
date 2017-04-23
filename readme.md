@@ -28,7 +28,7 @@ doStuff('look at cat pictures');
 
 ## Reducers
 
-## createReducer(config)
+## createReducer(config = {})
 This helper function will create a redux reducer for you from the provided config.
 
 When the reducer receives an action, if it matches one of the keys you provided (excluding initial and default) it will use that action handler to get the new state.
@@ -65,7 +65,7 @@ const count = (state = 0, action) => {
 }
 ```
 
-## createMultiReducer
+## createMultiReducer(config = {})
 This works similar to `combineReducers` in redux, but instead allows you to either define your reducers as objects to be created with `createReducer` or as a regular reducer function.
 
 Example
@@ -171,7 +171,7 @@ const auth = combineReducers({
   isLoggingIn
 })
 ```
-## createDynamicReducer
+## createDynamicReducer(config = {})
 There have been a few instances where I have created a reducer, whos state is an object. Each action that it handled simply updated keys/ids of the object.
 
 I created the createDynamicReducer to make this process a little bit simpler.
@@ -242,5 +242,42 @@ const todos = (state = {}, action) => {
 }
 ```
 
+## createMetaReducer(metaName, reducer)
+Sometimes you may create reducers that only handle meta data in your app, this function can help clean that up a little bit.
+
+The function will ignore any actions that are missing the specific meta key. When an action comes through with the metaName, your reducer will be called with only the meta data. 
+
+```js
+dispatch({
+ type: 'FETCH_TODO_REQUEST',
+ payload: {
+   todoId: 123
+ },
+ meta: {
+   log: {
+     type: LOG_MESSAGE,
+     message: `Fetching todo ${123}`
+   }
+ }
+})
+
+const logs = createMetaReducer('log', (state = {errors = [], info = []}, action) => {
+  // Here action = {type: LOG_MESSAGE, message: `Fetching todo ${123}`}
+  switch(action.type) {
+    case LOG_ERROR:
+      return {
+        ...state,
+        errors: [...state.errors, action.message]
+      }
+    case LOG_INFO:
+      return {
+        ...state,
+        info: [...state.info, action.message]
+      }
+    default:
+      return state
+  }
+})
+```
 
 ## Selectors

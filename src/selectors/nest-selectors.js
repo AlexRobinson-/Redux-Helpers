@@ -2,7 +2,7 @@ import isObject from './../utils/is-object';
 
 export default (selectors, getState = state => state) => {
   if (!isObject(selectors)) {
-    throw new Error('nestSelectors expects first argument to be an object');
+    throw new Error(`nestSelectors expects first argument to be an object, received type ${typeof selectors}}`);
   }
 
   if (typeof getState !== 'function') {

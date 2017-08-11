@@ -5,7 +5,7 @@ export default (metaTag, callback) => {
 
   return (state = {}, action) => {
     if (action && action.meta && action.meta[metaTag]) {
-      return callback(state, action.meta[metaTag])
+      return callback(state, action.meta[metaTag], action)
     }
 
     return state;

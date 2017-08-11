@@ -245,7 +245,7 @@ const todos = (state = {}, action) => {
 ## createMetaReducer(metaName, reducer)
 Sometimes you may create reducers that only handle meta data in your app, this function can help clean that up a little bit.
 
-The function will ignore any actions that are missing the specific meta key. When an action comes through with the metaName, your reducer will be called with only the meta data. 
+The function will ignore any actions that are missing the specific meta key. When an action comes through with the metaName, your reducer will be called with the params (state, metaData, action). 
 
 ```js
 dispatch({

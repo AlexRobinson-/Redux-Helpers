@@ -10,6 +10,10 @@ export default (config = {}) => {
   }
 
   return (state = {}, action) => {
+    if (action.type === 'initial') {
+      return state;
+    }
+
     const handler = config[action.type];
 
     if (handler === undefined) {

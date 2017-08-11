@@ -1,12 +1,12 @@
 {
   "name": "alexs-redux-helpers",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "main": "lib/redux-helpers.js",
   "jsnext:main": "lib/index.js",
   "module": "lib/index.js",
   "modules.root": "lib",
   "repository": {
-    "url": "https://github.com/AlexRobinson-/Redux-Helpers"
+    "url": "https://github.com/AlexRobinson-/Redux-Helpers`"
   },
   "license": "MIT",
   "scripts": {

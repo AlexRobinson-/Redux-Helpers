@@ -9,7 +9,7 @@ export default (config = {}) => {
     throw new Error('createReducer default must be a function');
   }
 
-  return (state = {}, action) => {
+  return (state = {}, action, ...params) => {
     if (action.type === 'initial') {
       return state;
     }
@@ -18,7 +18,7 @@ export default (config = {}) => {
 
     if (handler === undefined) {
       if (config.default) {
-        return config.default(state, action);
+        return config.default(state, action, ...params);
       }
 
       return state;
@@ -39,7 +39,7 @@ export default (config = {}) => {
     return ids.reduce(
       (newState, id) => ({
         ...newState,
-        [id]: typeof getNewState === 'function' ? (getNewState(newState[id] === undefined ? config.initial : newState[id], action)) : getNewState
+        [id]: typeof getNewState === 'function' ? (getNewState(newState[id] === undefined ? config.initial : newState[id], action, ...params)) : getNewState
       }), state
     )
   }

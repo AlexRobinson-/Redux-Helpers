@@ -9,7 +9,7 @@ export default (config = {}) => {
     throw new Error('initial state must be defined')
   }
 
-  return (state = config.initial, action) => {
+  return (state = config.initial, action, ...params) => {
     if (action.type === 'initial') {
       return state;
     }
@@ -18,14 +18,14 @@ export default (config = {}) => {
 
     if (handler === undefined) {
       if (config.default) {
-        return config.default(state, action);
+        return config.default(state, action, ...params);
       }
 
       return state;
     }
 
     if (typeof handler === 'function') {
-      return handler(state, action);
+      return handler(state, action, ...params);
     }
 
     return handler

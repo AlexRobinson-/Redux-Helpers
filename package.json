@@ -6,7 +6,7 @@
   "module": "lib/index.js",
   "modules.root": "lib",
   "repository": {
-    "url": "https://github.com/AlexRobinson-/Redux-Helpers`"
+    "url": "https://github.com/AlexRobinson-/Redux-Helpers"
   },
   "license": "MIT",
   "scripts": {

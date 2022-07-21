@@ -15,14 +15,15 @@ describe('create-meta-reducer', () => {
 
     describe('when action has a meta field that matches the meta string', () => {
       const metaPayload = { some: 'thing' };
+      const action = { type: 'SOME_ACTION', payload: {}, meta: { 'someMetaString': metaPayload } }
 
       beforeEach(() => {
         const reducer = createMetaReducer('someMetaString', callbackMock);
-        reducer(currentState, { type: 'SOME_ACTION', payload: {}, meta: { 'someMetaString': metaPayload } })
+        reducer(currentState, action)
       })
 
       it('returns the result of the callback function', () => {
-        expect(callbackMock).toHaveBeenCalledWith(currentState, metaPayload);
+        expect(callbackMock).toHaveBeenCalledWith(currentState, metaPayload, action);
       })
     })
 
@@ -34,7 +35,7 @@ describe('create-meta-reducer', () => {
         result = reducer(currentState, { type: 'SOME_ACTION', payload: {}, meta: { 'notSomeMetaString': {} } })
       })
 
-      it('returns the old sstate', () => {
+      it('returns the old state', () => {
         expect(result).toEqual(currentState);
       })
     })
